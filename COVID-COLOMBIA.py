@@ -17,3 +17,8 @@ data.drop('Unidad de medida de edad', axis = 1, inplace=True)
 data.drop('Código DIVIPOLA departamento', axis = 1, inplace=True)
 data.drop('Código DIVIPOLA municipio', axis = 1, inplace=True)
 data.drop('ID de caso', axis = 1, inplace=True)
+
+# 1) NÚMERO DE CASOS DE CONTAGIADOS EN EL PAÍS
+num_casos = data.shape[0]
+print('*'*50)
+print(f'Número de casos :\n{num_casos}')
