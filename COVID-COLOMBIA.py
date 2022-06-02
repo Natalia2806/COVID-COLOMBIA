@@ -22,3 +22,14 @@ data.drop('ID de caso', axis = 1, inplace=True)
 num_casos = data.shape[0]
 print('*'*50)
 print(f'Número de casos :\n{num_casos}')
+
+# 2) NÚMERO DE MUNICIPIOS AFECTADOS
+num_municipios = data['Nombre municipio'].value_counts().count()
+print('*'*50)
+print(f'Número de Municipios Afectados :\n{num_municipios}')
+
+# 3) LISTA DE LOS MUNICIPIOS AFECTADOS (sin repetirlos)
+municipios = data['Nombre municipio'].value_counts()
+print('*'*50)
+print(f'Municipios Afectados :\n{municipios}')
+
