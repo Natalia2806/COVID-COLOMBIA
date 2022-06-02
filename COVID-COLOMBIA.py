@@ -63,3 +63,18 @@ departamentos = data['Nombre departamento'].value_counts()
 print('*'*50)
 print(f'Departamentos afectados :\n{departamentos}')
 
+# 10) ORDEN DE MAYOR A MENOR POR TIPO DE ATENCIÓN
+tipo_recuperacion = data['Tipo de recuperación'].sort_values().value_counts()
+print('*'*50)
+print(f'Tipo de recuperación (Mayor a menor) :\n{tipo_recuperacion}')
+
+# 11) LISTA DE MAYOR A MENOR LOS 10 DEPARTAMENTOS CON MAS CASOS DE CONTAGIADOS
+departamentos_casos = data['Nombre departamento'].value_counts().head(10)
+print('*'*50)
+print(f'10 Departamentos con más casos de contagiados (Mayor a menor) :\n{departamentos_casos}')
+
+# 12) LISTA DE MAYOR A MENOR LOS DEPARTAMENTOS CON MAS CASOS DE FALLECIDOS
+aux_fallecidos_dep = data[data['Estado'] == 'Fallecido'].groupby('Nombre departamento')
+fallecidos_dep = aux_fallecidos_dep.size().sort_values(ascending=False).head(10)
+print('*'*50)
+print(f'10 Departamentos con más casos casos de fallecidos (Mayor a menor) :\n{fallecidos_dep}')
