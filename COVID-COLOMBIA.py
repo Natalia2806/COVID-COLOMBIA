@@ -78,3 +78,26 @@ aux_fallecidos_dep = data[data['Estado'] == 'Fallecido'].groupby('Nombre departa
 fallecidos_dep = aux_fallecidos_dep.size().sort_values(ascending=False).head(10)
 print('*'*50)
 print(f'10 Departamentos con más casos casos de fallecidos (Mayor a menor) :\n{fallecidos_dep}')
+
+# 13) LISTA DE MAYOR A MENOR LOS 10 DEPARTAMENTOS CON MAS CASOS DE RECUPERADOS
+aux_recuperados_dep = data[data['Recuperado'] == 'Recuperado'].groupby('Nombre departamento')
+recuperados_dep = aux_fallecidos_dep.size().sort_values(ascending=False).head(10)
+print('*'*50)
+print(f'10 Departamentos con más casos casos de recuperados (Mayor a menor) :\n{recuperados_dep}')
+
+# 14) LISTA DE MAYOR A MENOR LOS 10 MUNICIPIOS CON MAS CASOS DE CONTAGIADOS
+municipios_casos = data['Nombre municipio'].value_counts().head(10)
+print('*'*50)
+print(f'10 Municipios con más casos de contagiados (Mayor a menor) :\n{municipios_casos}')
+
+# 15) LISTA DE MAYOR A MENOR LOS 10 MUNICIPIOS CON MAS CASOS DE FALLECIDOS
+aux_fallecidos_mun = data[data['Estado'] == 'Fallecido'].groupby('Nombre municipio')
+fallecidos_mun = aux_fallecidos_mun.size().sort_values(ascending=False).head(10)
+print('*'*50)
+print(f'10 Municipios con más casos casos de fallecidos (Mayor a menor) :\n{fallecidos_mun}')
+
+# 16) LISTA DE MAYOR A MENOR LOS 10 MUNICIPIOS CON MAS CASOS DE RECUPERADOS
+aux_recuperados_mun = data[data['Recuperado'] == 'Recuperado'].groupby('Nombre municipio')
+recuperados_mun = aux_recuperados_mun.size().sort_values(ascending=False).head(10)
+print('*'*50)
+print(f'10 Municipios con más casos casos de recuperados (Mayor a menor) :\n{recuperados_mun}')
