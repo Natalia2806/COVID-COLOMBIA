@@ -33,3 +33,18 @@ municipios = data['Nombre municipio'].value_counts()
 print('*'*50)
 print(f'Municipios Afectados :\n{municipios}')
 
+# 4) NÚMERO DE PERSONAS QUE SE ENCUENTRAN EN ATENCIÓN EN CASA
+num_atencion_casa = data[data['Ubicación del caso'] == 'Casa'].shape[0]
+print('*'*50)
+print(f'Personas con atención en casa :\n{num_atencion_casa}')
+
+# 5) NÚMERO DE PERSONAS QUE SE ENCUENTRAN RECUPERADAS
+num_recuperados = data[data['Recuperado'] == 'Recuperado'].shape[0]
+print('*'*50)
+print(f'Personas recuperadas :\n{num_recuperados}')
+
+# 6) NÚMERO DE PERSONAS QUE HAN FALLECIDO
+num_fallecidos = data[data['Recuperado'] == 'Fallecido'].shape[0]
+print('*'*50)
+print(f'Personas fallecidas :\n{num_fallecidos}')
+
