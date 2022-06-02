@@ -48,3 +48,18 @@ num_fallecidos = data[data['Recuperado'] == 'Fallecido'].shape[0]
 print('*'*50)
 print(f'Personas fallecidas :\n{num_fallecidos}')
 
+# 7) ORDENAR DE MAYOR A MENOR POR TIPO DE CASO (Importado, en estudio, Relacionado)
+tipo_contagio = data['Tipo de contagio'].sort_values().value_counts()
+print('*'*50)
+print(f'Tipo de contagio (Mayor a menor) :\n{tipo_contagio}')
+
+# 8) NÚMERO DE DEPARTAMENTOS AFECTADOS
+num_departamentos = data['Nombre departamento'].value_counts().count()
+print('*'*50)
+print(f'Número de departamentos afectados :\n{num_departamentos}')
+
+# 9) LISTA DE LOS DEPARTAMENTOS AFECTADOS(sin repetirlos)
+departamentos = data['Nombre departamento'].value_counts()
+print('*'*50)
+print(f'Departamentos afectados :\n{departamentos}')
+
