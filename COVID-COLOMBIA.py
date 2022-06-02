@@ -101,3 +101,34 @@ aux_recuperados_mun = data[data['Recuperado'] == 'Recuperado'].groupby('Nombre m
 recuperados_mun = aux_recuperados_mun.size().sort_values(ascending=False).head(10)
 print('*'*50)
 print(f'10 Municipios con más casos casos de recuperados (Mayor a menor) :\n{recuperados_mun}')
+
+# 17) LISTA AGRUPADO POR DEPARTAMENTO Y EN ORDEN DE MAYOR A MENOR LAS CIUDADES CON MAS CASOS DE CONTAGIADOS
+dep_ciud_contagios = data.groupby(['Nombre departamento', 'Nombre municipio']).size().sort_values(ascending=False)
+print(f'Departamentos y sus ciudades con mas casos de contagios:\n{dep_ciud_contagios}')
+
+# 18) NÚMERO DE MUJERES Y HOMBRES CONTAGIADOS POR CIUDAD POR DEPARTAMENTO
+numero_h_m_contagiados = data.groupby(['Sexo', 'Nombre municipio', 'Nombre departamento']).size().sort_values(ascending=False)
+print(f'Número de Mujeres y hombres contagiados por ciudad por departamento:\n{numero_h_m_contagiados}')
+
+# 19) LISTA DEL PROMEDIO DE EDAD DE CONTAGIADOS POR HOMBRE Y MUJERES POR CIUDAD POR DEPARTAMENTO
+promedio = data.groupby( ['Sexo', 'Nombre municipio', 'Nombre departamento']).Edad.mean()
+print(f'{promedio}')
+
+# 20) LISTA DE MAYOR A MENOR EL NÚMERO DE CONTAGIADOS POR DEPARTAMENTO DE PROCEDENCIA
+departamento_procedencia = data['Nombre departamento'].value_counts()
+print(f'Número de contagiados por departamento de procedencia: \n{departamento_procedencia}')
+
+# 21) LISTA DE MAYOR A MENOR LAS FECHAS DONDE SE PRESENTARON MAS CONTAGIADOS
+fechas_mas_contagios = data['Fecha de diagnóstico' ].value_counts().sort_values(ascending=False)
+print(f'Fechas donde se presentaron mas contagios:\n{fechas_mas_contagios}')
+
+# 22. DIGA CUAL ES LA TASA DE MORTALIDAD Y RECUPERACIÓN QUE TIENE TODA COLOMBIA
+cantidad_muertes = data[data['Estado'] == 'Fallecido'].shape[0]
+cantidad_recuperados = data[data['Recuperado'] == 'Recuperado'].shape[0]
+
+tasa_mortalidad = cantidad_muertes / num_casos * 100
+tasa_recuperacion = cantidad_recuperados / num_casos * 100
+
+print(f'Tasa de mortalidad en Colombia: {tasa_mortalidad}')
+print(f'Tasa de recuperacion en Colombia: {tasa_recuperacion}')
+
