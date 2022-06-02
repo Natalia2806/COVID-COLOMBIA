@@ -2,6 +2,8 @@
 ESTUDIANTE: NATALIA TUIRAN QUINTERO
 """
 import pandas as pd
+import matplotlib.pyplot as plt
+
 
 #DATASETS
 url = 'Casos_positivos_de_COVID-19_en_Colombia.csv'
@@ -132,3 +134,104 @@ tasa_recuperacion = cantidad_recuperados / num_casos * 100
 print(f'Tasa de mortalidad en Colombia: {tasa_mortalidad}')
 print(f'Tasa de recuperacion en Colombia: {tasa_recuperacion}')
 
+# 23) LISTA DE LA TASA DE MORTALIDAD Y RECUPERACIÓN QUE TIENE CADA DEPARTAMENTO
+muertes_departamento = data[data['Estado'] == 'Fallecido'].groupby('Nombre departamento').size()
+tasa_mortalidad_dpto = muertes_departamento /  num_casos * 100
+print(f'Tasa de mortalidad de cada departamento:\n{tasa_mortalidad_dpto}')
+
+recuperacion_departamento = data[data['Recuperado'] == 'Recuperado'].groupby('Nombre departamento').size()
+tasa_recuperacion_dpto = recuperacion_departamento /  num_casos * 100
+print(f'Tasa de recuperacion de cada departamento:\n{tasa_recuperacion_dpto}')
+
+# 24) LISTA DE LA TASA DE MORTALIDAD Y RECUPERACIÓN QUE TIENE CADA CIUDAD
+muertes_municipio = data[data['Estado'] == 'Fallecido'].groupby('Nombre municipio').size()
+tasa_mortalidad_munic = muertes_municipio /  num_casos * 100
+print(f'Tasa de mortalidad de cada municipio:\n{tasa_mortalidad_munic}')
+
+recuperacion_municipio = data[data['Recuperado'] == 'Recuperado'].groupby('Nombre municipio').size()
+tasa_recuperacion_munic = recuperacion_municipio /  num_casos * 100
+print(f'Tasa de recuperacion de cada municipio:\n{tasa_recuperacion_munic}')
+
+# 25.LISTA POR CADA CIUDAD LA CANTIDAD DE PERSONAS POR ATENCIÓN
+cantidad_atencion = data.groupby(['Nombre municipio', 'Ubicación del caso']).size()
+print(f'Cantidad de personas por atención:\n{cantidad_atencion}')
+
+# 26) LISTA DEL PROMEDIO DE EDAD POR SEXO POR CADA CIUDAD DE CONTAGIADOS
+promedio_edad_sexo = data.groupby(['Sexo', 'Nombre municipio']).Edad.mean()
+print(f'Promedio de edad por sexo por cada ciudad de contagiados:\n{promedio_edad_sexo}')
+
+# 27) GRAFIQUE LAS CURVAS DE CONTAGIO, MUERTE Y RECUPERACIÓN DE TODA COLOMBIA ACUMULADOS
+data.loc[data['Sexo'] == 'm'] = 'M'
+data.loc[data['Sexo'] == 'f'] = 'F'
+data.loc[data['Estado'] == 'leve'] = 'Leve'
+data.loc[data['Estado'] == 'LEVE'] = 'Leve'
+
+contagios = data.groupby('Fecha de diagnóstico').size().sort_values().plot(figsize=(15, 4))
+plt.show(contagios)
+print('\nCurva de Contagios')
+
+
+fallecidos = data[data['Estado'] == 'Fallecido'].groupby('Fecha de diagnóstico').size().sort_values().plot(figsize=(15, 4))
+plt.show(fallecidos)
+print('\nCurva de Fallecidos')
+
+recuperados = data[data['Recuperado'] == 'Recuperado'].groupby('Fecha de diagnóstico').size().sort_values().plot(figsize=(15, 4))
+plt.show(recuperados)
+print('\nCurva de Recuperados')
+
+# 28) GRAFICA DE LAS CURVAS DE CONTAGIO, MUERTE Y RECUPERACIÓN DE LOS 10 DEPARTAMENTOS CON MAS CASOS DE CONTAGIADOS ACUMULADOS
+contagios_dpto = data.groupby('Nombre departamento').size().sort_values(ascending=False).head(10).plot(figsize=(15, 4))
+plt.show(contagios_dpto)
+print('\nCurva de los 10 departamentos con mas casos de contagiados')
+
+fallecidos_dpto = data[data['Estado'] == 'Fallecido'].groupby('Nombre departamento').size().sort_values(ascending=False).head(10).plot(figsize=(15, 4))
+plt.show(fallecidos_dpto)
+print('\nCurva de los 10 departamentos con mas casos de fallecidos')
+
+recuperados_dpto = data[data['Recuperado'] == 'Recuperado'].groupby('Nombre departamento').size().sort_values(ascending=False).head(10).plot(figsize=(15, 4))
+plt.show(recuperados_dpto)
+print('\nCurva de los 10 departamentos con mas casos de recuperados')
+
+# 29) GRAFICA DE LAS CUERVAS DE CONTAGIO, MUERTE Y RECUPERACION DE LAS 10 CIUDADES CON MAS CASOS DE CONTAGIOS ACUMULADOS
+contagios_municipio = data.groupby('Nombre municipio').size().sort_values(ascending=False).head(10).plot(figsize=(15, 4))
+plt.show(contagios_municipio)
+print('\nCurva de los 10 municipios con mas casos de contagiados')
+
+fallecidos_municipio = data[data['Estado'] == 'Fallecido'].groupby('Nombre municipio').size().sort_values(ascending=False).head(10).plot(figsize=(15, 4))
+plt.show(fallecidos_municipio)
+print('\nCurva de los 10 municipios con mas casos de fallecidos')
+
+recuperados_municipio = data[data['Recuperado'] == 'Recuperado'].groupby('Nombre municipio').size().sort_values(ascending=False).head(10).plot(figsize=(15, 4))
+plt.show(recuperados_municipio)
+print('\nCurva de los 10 municipios con mas casos de recuperados')
+
+# 30) LISTA DE MAYOR A MENOR LA CANTIDAD DE FALLECIDOS POR EDAD EN TODA COLOMBIA.
+fallecidos = data[data['Estado'] == 'Fallecido'].groupby('Edad').size().sort_values(ascending = False)
+print(f'Cantidad de fallecidos por edad en toda Colombia:\n{fallecidos}')
+
+# 31) LISTA DE EL PORCENTAJE DE PERSONAS POR ATENCIÓN DE TODA COLOMBIA
+porcentaje_personas= ((data.groupby('Ubicación del caso').size().sort_values(ascending = False)) / ((data.groupby('Ubicación del caso').size().sort_values(ascending = False)).sum())) * 100
+print(f'Porcentaje de personas por atención de toda Colombia\n {porcentaje_personas}')
+
+# 32) HAGA UN GRÁFICO DE BARRAS POR ATENCIÓN DE TODA COLOMBIA
+data.groupby(['Ubicación del caso']).size().sort_values(ascending = False).plot(kind='bar')
+plt.ylabel('Cantidad de personas')
+print('\n Gráfico de barras por atención de toda Colombia')
+
+# 33) HAGA UN GRÁFICO DE BARRAS POR SEXO DE TODA COLOMBIA
+data.groupby(['Sexo']).size().sort_values(ascending = False).plot(kind='bar')
+print('\nGrafico de barras por sexo de toda Colombia')
+
+# 34.Haga un gráfico de barras por tipo de toda Colombia
+data.groupby(['Tipo de contagio']).size().sort_values(ascending = False).plot(kind='bar')
+print('\nGrafico de barras por tipo de contagio de toda Colombia')
+
+
+# 35. Haga un gráfico de barras del número de contagiados, recuperados y fallecidos por fecha de toda Colombia
+
+data.groupby('Fecha de diagnóstico').size().plot(kind = 'bar')
+Fallecidos = data[data['Ubicación del caso'] == 'Fallecido']
+Fallecidos.groupby('Fecha de diagnóstico').size().plot(kind = 'bar')
+Recuperado = data[data['Recuperado'] == 'Recuperado']
+Recuperado.groupby('Fecha de diagnóstico').size().plot(kind = 'bar')
+plt.legend(["Recuperados", "Fallecidos", "Contagiados"])
